@@ -20,6 +20,4 @@ public interface CompanyService {
 	Employee updateSalary(long id, int newSalary);
 	void save(String filePath);
 	void restore(String filePath);
-	
-	
 }
