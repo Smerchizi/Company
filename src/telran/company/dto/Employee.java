@@ -5,7 +5,8 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public record Employee(long id, String name,
-		int salary, String department, LocalDate birthDate) implements Serializable {
+		int salary, String department, LocalDate birthDate) implements Serializable,
+Comparable<Employee> {
 
 	@Override
 	public int hashCode() {
@@ -22,6 +23,12 @@ public record Employee(long id, String name,
 			return false;
 		Employee other = (Employee) obj;
 		return id == other.id;
+	}
+
+	@Override
+	public int compareTo(Employee o) {
+		
+		return Long.compare(id, o.id);
 	}
      
 }

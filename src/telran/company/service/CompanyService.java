@@ -10,7 +10,7 @@ public interface CompanyService {
 	Employee hireEmployee (Employee empl);
 	Employee fireEmployee(long id);
 	Employee getEmployee(long id);
-	List<Employee> getEmployeesByDepatment(String department);
+	List<Employee> getEmployeesByDepartment(String department);
 	List<Employee> getAllEmployees();
 	List<Employee> getEmployeesBySalary(int salaryFrom, int salaryTo);
 	List<Employee> getEmployeeByAge(int ageFrom, int ageTo);
