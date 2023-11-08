@@ -1,13 +1,24 @@
 package telran.company.service;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 import telran.company.dto.DepartmentAvgSalary;
 import telran.company.dto.Employee;
 import telran.company.dto.SalaryIntervalDistribution;
 
 public class CompanyServiceImpl implements CompanyService {
-
+	HashMap<Long, Employee> employeesMap = new HashMap<>();
+	/***********************************************************/
+	HashMap<String, Set<Employee>> employeesDepartment = new HashMap<>();
+	//key - department, value- Set of employees working in the department
+	/*************************************************************/
+	TreeMap<Integer, Set<Employee>> employeesSalary = new TreeMap<>();
+	//key - salary, value - set of employees having the salary value
+	/****************************************************************/
+	TreeMap<LocalDate, Set<Employee>> employeesAge = new TreeMap<>();
+	//key birth date; value set of employees born at the date
+	/*******************************************************************/
 	@Override
 	/**
 	 * adds new Employee into a company
@@ -16,7 +27,7 @@ public class CompanyServiceImpl implements CompanyService {
 	 *  returns reference to the being added Employee object
 	 */
 	public Employee hireEmployee(Employee empl) {
-		//TODO
+		//TODO O[1]
 		return null;
 	}
 
@@ -27,7 +38,7 @@ public class CompanyServiceImpl implements CompanyService {
 	 * the method must throw IllegalStateException
 	 */
 	public Employee fireEmployee(long id) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub O[1]
 		return null;
 	}
 
@@ -38,7 +49,7 @@ public class CompanyServiceImpl implements CompanyService {
 	 * the method returns null
 	 */
 	public Employee getEmployee(long id) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub O[1]
 		return null;
 	}
 
@@ -48,61 +59,61 @@ public class CompanyServiceImpl implements CompanyService {
 	 * in the case none employees in the department, the method returns empty list
 	 */
 	public List<Employee> getEmployeesByDepartment(String department) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub O[1]
 		return null;
 	}
 
 	@Override
 	public List<Employee> getAllEmployees() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub O[N]
 		return null;
 	}
 
 	@Override
 	public List<Employee> getEmployeesBySalary(int salaryFrom, int salaryTo) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub O[LogN]
 		return null;
 	}
 
 	@Override
 	public List<Employee> getEmployeeByAge(int ageFrom, int ageTo) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub O[LogN]
 		return null;
 	}
 
 	@Override
 	public List<DepartmentAvgSalary> salaryDistributionByDepartments() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub O[N]
 		return null;
 	}
 
 	@Override
 	public List<SalaryIntervalDistribution> getSalaryDistribution(int interval) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub O[N]
 		return null;
 	}
 
 	@Override
 	public Employee updateDepartment(long id, String newDepartment) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub O[1]
 		return null;
 	}
 
 	@Override
 	public Employee updateSalary(long id, int newSalary) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub O[LogN]
 		return null;
 	}
 
 	@Override
 	public void save(String filePath) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub O[N]
 
 	}
 
 	@Override
 	public void restore(String filePath) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub O[N]
 
 	}
 
