@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 //	
 //}
 class FunctionalInterfaceTest {
-Integer [] ar = {100, 13, -10, 201, 150, 17};
+Integer [] ar = {100, 13, -10, 201, 150, 17 };
 	@Test
 	void reverseSortTest() {
 		Integer[] expected = {201, 150, 100, 17, 13, -10};
