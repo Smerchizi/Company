@@ -64,8 +64,43 @@ public class CompanyServiceImpl implements CompanyService {
 	 * the method must throw IllegalStateException
 	 */
 	public Employee fireEmployee(long id) {
-		// TODO Auto-generated method stub O[1]
-		return null;
+		Employee empl = employeesMap.remove(id);
+		if (empl == null){
+			throw new IllegalStateException("Emlployee not found");
+		}
+		removeEmployeesDepartmnet(empl);
+		removeEmployeesSalary(empl);
+		removeEmployeesAge(empl);
+		return empl;
+	}
+
+	private void removeEmployeesSalary(Employee empl) {
+		int salary = empl.salary();
+		Set<Employee> set = employeesSalary.get(salary);
+		set.remove(empl);
+		if (set.isEmpty()){
+			employeesSalary.remove(salary);
+		}
+	}
+
+	private void removeEmployeesAge(Employee empl) {
+		LocalDate birthDate = empl.birthDate();
+		Set<Employee> set = employeesAge.get(birthDate);
+		set.remove(empl);
+
+		if (set.isEmpty()){
+			employeesAge.remove(birthDate);
+
+		}
+	}
+
+	private void removeEmployeesDepartmnet(Employee empl) {
+		String department = empl.department();
+		Set<Employee> set = employeesDepartment.get(department);
+		set.remove(empl);
+		if (set.isEmpty()){
+			employeesDepartment.remove(department);
+		}
 	}
 
 	@Override
