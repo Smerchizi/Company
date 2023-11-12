@@ -27,8 +27,34 @@ public class CompanyServiceImpl implements CompanyService {
 	 *  returns reference to the being added Employee object
 	 */
 	public Employee hireEmployee(Employee empl) {
-		//TODO O[1]
-		return null;
+		long id = empl.id();
+		if (employeesMap.containsKey(id)){
+			throw new IllegalStateException("Employee already exists " + id);
+		}
+		employeesMap.put(id, empl);
+		addEmployeeSalary(empl);
+		addEmployeeAge(empl);
+		addEmployeeDepartment(empl);
+		return empl;
+	}
+
+	private void addEmployeeDepartment(Employee empl) {
+		String department = empl.department();
+		Set<Employee> set = employeesDepartment.computeIfAbsent(department,k -> new HashSet<>());
+		set.add(empl);
+	}
+
+	private void addEmployeeAge(Employee empl) {
+		LocalDate birtdate = empl.birthDate();
+		Set<Employee> set = employeesAge.computeIfAbsent(birtdate, k -> new HashSet<>());
+		set.add(empl);
+
+	}
+
+	private void addEmployeeSalary(Employee empl) {
+		employeesSalary.computeIfAbsent(empl.salary(),k -> new HashSet<>()).add(empl);
+
+
 	}
 
 	@Override
