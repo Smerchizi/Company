@@ -111,7 +111,7 @@ public class CompanyServiceImpl implements CompanyService {
 	 */
 	public Employee getEmployee(long id) {
 		// TODO Auto-generated method stub O[1]
-		return null;
+		return employeesMap.get(id);
 	}
 
 	@Override
@@ -120,26 +120,41 @@ public class CompanyServiceImpl implements CompanyService {
 	 * in the case none employees in the department, the method returns empty list
 	 */
 	public List<Employee> getEmployeesByDepartment(String department) {
-		// TODO Auto-generated method stub O[1]
-		return null;
+		Set<Employee> setEmployeesDep = employeesDepartment.getOrDefault(department, new HashSet<>());
+
+		return new ArrayList<>(setEmployeesDep);
 	}
 
 	@Override
 	public List<Employee> getAllEmployees() {
-		// TODO Auto-generated method stub O[N]
-		return null;
+		return new ArrayList<>(employeesMap.values());
 	}
 
 	@Override
 	public List<Employee> getEmployeesBySalary(int salaryFrom, int salaryTo) {
-		// TODO Auto-generated method stub O[LogN]
-		return null;
+		Collection<Set<Employee>> col = employeesSalary.subMap(salaryFrom, salaryTo).values();
+		ArrayList<Employee> res = new ArrayList<>();
+		for (Set<Employee> set: col){
+			res.addAll(set);
+		}
+		return res;
 	}
 
 	@Override
 	public List<Employee> getEmployeeByAge(int ageFrom, int ageTo) {
-		// TODO Auto-generated method stub O[LogN]
-		return null;
+		LocalDate dateFrom = getBrithDate(ageTo);
+		LocalDate dateTo = getBrithDate(ageFrom);
+		Collection<Set<Employee>> col = employeesAge.subMap(dateFrom, dateTo).values();
+		ArrayList<Employee> res = new ArrayList<>();
+		for (Set<Employee> set: col){
+			res.addAll(set);
+		}
+
+		return res;
+	}
+
+	private LocalDate getBrithDate(int age) {
+		return LocalDate.now().minusYears(age);
 	}
 
 	@Override
@@ -156,14 +171,17 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public Employee updateDepartment(long id, String newDepartment) {
-		// TODO Auto-generated method stub O[1]
-		return null;
+		Employee empl = fireEmployee(id);
+		Employee newEmployee = new Employee(id, empl.name(), empl.salary(), newDepartment, empl.birthDate());
+		return hireEmployee(newEmployee);
 	}
 
 	@Override
 	public Employee updateSalary(long id, int newSalary) {
-		// TODO Auto-generated method stub O[LogN]
-		return null;
+		Employee empl = fireEmployee(id);
+		Employee newEmployee = new Employee(id, empl.name(), newSalary, empl.department(), empl.birthDate());
+		return hireEmployee(newEmployee);
+
 	}
 
 	@Override
