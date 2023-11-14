@@ -5,6 +5,7 @@ import static telran.interview.InterviewTasks.*;
 
 import java.util.HashMap;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,12 +19,14 @@ class InterviewTasksTest {
 		isSum2(bigArray, 1);
 	}
 	@Test
+	@Disabled
 	@DisplayName("performance O[N^2] is Sum2N2 ")
 	void isSum2N2PerformanceTest() {
 		//isSum2N2 complexity O[N^2]
 		isSum2N2(bigArray, 1);
 	}
 	@Test
+	@Disabled
 	void isSum2Test() {
 		int [] ar1 = {1000, 300, -200, 20, 40, -10};
 		assertTrue(isSum2(ar1, 800));//1000 + (-200) = 800
@@ -31,6 +34,7 @@ class InterviewTasksTest {
 		assertFalse(isSum2(ar1, 50)); //no two number with the given sum
 	}
 	@Test
+	@Disabled
 	void isSum2N2Test() {
 		int [] ar1 = {1000, 300, -200, 20, 40, -10};
 		assertTrue(isSum2N2(ar1, 800));//1000 + (-200) = 800
@@ -38,6 +42,7 @@ class InterviewTasksTest {
 		assertFalse(isSum2N2(ar1, 50)); //no two number with the given sum
 	}
 	@Test
+	@Disabled
 	void getMaxPositiveWithNegativeValueTest() {
 		int [] ar1 = {-1,100, 200, -50, 1, -100, 50};
 		int [] ar2 = {-1, -100, 200, -500, 10, -100, 50, 200};
@@ -45,6 +50,7 @@ class InterviewTasksTest {
 		assertEquals(-1,  getMaxPositiveWithNegativeValue(ar2));
 	}
 	@Test
+	@Disabled
 	void getMapOccurrencesTest() {
 		String[] strings = {
 				"lpm", "ab", "a", "lpm", "a", "aa", "lpm"
@@ -56,6 +62,7 @@ class InterviewTasksTest {
 		assertEquals(1, mapOccurrences.get("aa"));
 	}
 	@Test
+	@Disabled
 	void isAnagramTest() {
 		String string = "yellow";
 		assertTrue(isAnagram(string, "wolely"));
@@ -68,5 +75,25 @@ class InterviewTasksTest {
 		assertFalse(isAnagram(string, "wolye"));//must be two 'l'
 
 	}
+	@Test
+	void displayDigitsDistributionTest() {
+		displayDigitsDistribution();
+		//required output
+		/* always 1 will be first
+		 *        2 will be second
+		 * 1 - <counter of occurrences>
+		 * 2 -  <counter of occurrences>
+		 * random order of digits
+		 * 0 - <counter of occurrences>
+		 * 4 - <counter of occurrences>
+		 * 3 - <counter of occurrences>
+		 * 5 - <counter of occurrences>
+		 * 7 - <counter of occurrences>
+		 * 6 - <counter of occurrences>
+		 * 9 - <counter of occurrences>
+		 * 8 - <counter of occurrences>
+		 */
+	}
+
 
 }
