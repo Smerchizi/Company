@@ -123,28 +123,33 @@ public class InterviewTasks {
 	}
 	//Task for streams /grouping
 	public static void displayDigitsDistribution() {
+		int nNumbers = 1_000_000;
 		Random gen = new Random();
-		IntStream nNumbers = gen.ints(10,1,Integer.MAX_VALUE);
-		Stream<String> stream = nNumbers.mapToObj(String::valueOf);
-		Stream<Character> charStream = stream.flatMap(s -> s.chars().mapToObj(c -> (char) c));
-		Map<Character, Long> countChars = charStream.collect(Collectors.groupingBy(c -> c, Collectors.counting()));
-		countChars.entrySet().stream().sorted((c1,c2) -> {
-			if (c1.getKey() == '1') {
-				return -1; // '1' comes first
-			} else if (c2.getKey() == '1') {
-				return 1;
-			} else if (c1.getKey() == '2') {
-				return -1; // '2' comes second
-			} else if (c2.getKey() == '2') {
-				return 1;
-			} else {
-				return c2.getValue().compareTo(c1.getValue()); // Sort by occurrences in descending order
-			}
-		}).forEach(c -> System.out.printf("%s => %d\n", c.getKey(), c.getValue()));
-
-
-
-
+		Map<String, Long> map = gen.ints(nNumbers,1,Integer.MAX_VALUE)
+				.flatMap(n -> Integer.toString(n).chars())
+				.mapToObj(n -> "" + (char)n)
+				.collect(Collectors.groupingBy(s -> s, Collectors.counting()));
+		map.entrySet().stream()
+				.sorted((e1,e2) -> Long.compare(e2.getValue(), e1.getValue()))
+				.forEach(e -> System.out.printf("%s - %d\n", e.getKey(), e.getValue()));
+//		IntStream nNumbers = gen.ints(1_000_000,1, 1000);
+//		Stream<String> stream = nNumbers.mapToObj(String::valueOf);
+//		Stream<Character> charStream = stream.flatMap(s -> s.chars().mapToObj(c -> (char) c));
+//		Map<Character, Long> countChars = charStream.collect(Collectors.groupingBy(c -> c, Collectors.counting()));
+//		countChars.entrySet().stream()
+//				.sorted((c1,c2) -> {
+//			if (c1.getKey() == '1') {
+//				return -1; // '1' comes first
+//			} else if (c2.getKey() == '1') {
+//				return 1;
+//			} else if (c1.getKey() == '2') {
+//				return -1; // '2' comes second
+//			} else if (c2.getKey() == '2') {
+//				return 1;
+//			} else {
+//				return c2.getValue().compareTo(c1.getValue()); // Sort by occurrences in descending order
+//			}
+//		}).forEach(c -> System.out.printf("%s => %d\n", c.getKey(), c.getValue()));
 
 		//TODO
 		//create stream of random int's (nNumbers), each int number in range [1, Integer.Max_VALUE)
@@ -153,6 +158,10 @@ public class InterviewTasks {
 		//grouping with counting of occurrences
 		//sorting in descending order of occurrences
 		//printing
+	}
+
+	public static void displayArrayShuffling(int[] array){
+
 	}
 
 }

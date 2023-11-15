@@ -95,5 +95,13 @@ class InterviewTasksTest {
 		 */
 	}
 
+	@Test
+	void displayArrayShufflingTest(){
+		int[] array = {1,2,3,4,5,6};
+		for (int i = 0; i < 3; i++){
+			displayArrayShuffling(array);
+		}
+	}
+
 
 }
