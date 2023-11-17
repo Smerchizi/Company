@@ -3,6 +3,7 @@ package telran.company.service;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.io.*;
 
 import telran.company.dto.DepartmentAvgSalary;
 import telran.company.dto.Employee;
@@ -160,17 +161,28 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public List<DepartmentAvgSalary> salaryDistributionByDepartments() {
-		Map<String, Double> map = employeesMap.values().stream().collect(Collectors.groupingBy(empl -> empl.department()
+		Map<String, Double> map = employeesMap.values().stream()
+				.collect(Collectors.groupingBy(empl -> empl.department()
 				,Collectors.averagingInt(Employee::salary)));
 		System.out.println(map);
 
-		return map.entrySet().stream().map(e -> new DepartmentAvgSalary(e.getKey(), e.getValue().intValue())).toList();
+		return map.entrySet().stream().map(e -> new DepartmentAvgSalary(e.getKey(), e.getValue()
+				.intValue())).toList();
 	}
 
 	@Override
 	public List<SalaryIntervalDistribution> getSalaryDistribution(int interval) {
-		// TODO Auto-generated method stub O[N]
-		return null;
+		Map<Integer, Long> map = employeesMap.values().stream()
+				.collect(Collectors.groupingBy(e -> e.salary() / interval,
+						Collectors.counting()));
+		System.out.println(map);
+
+		return map.entrySet().stream()
+				.sorted((e1,e2) -> Integer.compare(e1.getKey(), e2.getKey()))
+				.map(e -> new SalaryIntervalDistribution(
+						e.getKey() * interval,
+						e.getKey() * interval + interval
+						,e.getValue())).toList();
 	}
 
 	@Override
@@ -190,13 +202,29 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public void save(String filePath) {
-		// TODO Auto-generated method stub O[N]
+		try(ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(filePath))){
+			output.writeObject(getAllEmployees());
+
+		}catch (Exception e){
+			System.out.println(e.toString());
+			throw new RuntimeException();
+		}
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void restore(String filePath) {
-		// TODO Auto-generated method stub O[N]
+		List<Employee> employees = null;
+		try(ObjectInputStream input = new ObjectInputStream(new FileInputStream(filePath))) {
+			employees = (List<Employee>) input.readObject();
+			employees.forEach(this::hireEmployee);
+		}catch (FileNotFoundException e){
+			System.out.println(filePath + " File with data doesn't exist");
+		}catch (Exception e){
+			System.out.println(e);
+			throw new RuntimeException(e);
+		}
 
 	}
 
