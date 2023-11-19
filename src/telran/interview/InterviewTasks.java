@@ -1,9 +1,6 @@
 package telran.interview;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class InterviewTasks {
@@ -151,8 +148,29 @@ public class InterviewTasks {
 	.forEach(n -> System.out.print(n + " "));
 	}
 	 */
-	public static void displayArrayShuffling(int []array) {
-		//TODO
+
+	public static void displayArrayShuffling(int[] array) {
+		Set<Integer> set = new HashSet<>();
+		int min = Integer.MAX_VALUE;
+		int max = Integer.MIN_VALUE;
+		for (int i = 0; i < array.length; i++){
+			if (array[i] > max) {
+				max = array[i];
+			}
+			if (array[i] < min){
+				min = array[i];
+			}
+		}
+		Random gen = new Random();
+
+		while (set.size() < array.length) {
+			int randomNum = gen.nextInt((max - min) + 1) + min;
+			if (set.add(randomNum)) {
+				System.out.print(randomNum + " ");
+			}
+		}
+		System.out.println();
+
 	}
 
 }

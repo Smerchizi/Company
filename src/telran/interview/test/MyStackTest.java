@@ -32,7 +32,7 @@ class MyStackTest {
     void testpull() {
         assertEquals(list.removeLast(), stack.pull());
 
-        assertThrows(NoSuchElementException.class, ()-> stackEmpty.pull());
+        assertThrowsExactly(NoSuchElementException.class, ()-> stackEmpty.pull());
     }
 
     @Test
@@ -81,6 +81,10 @@ class MyStackTest {
         assertEquals(2000000, stack.getMax());
         stack.pull();stack.pull();stack.pull();
         assertEquals(100000, stack.getMax());
+        while(!stack.isEmpty()) {
+            stack.pull();
+        }
+        assertThrowsExactly(NoSuchElementException.class, () -> stack.getMax());
     }
 
 
