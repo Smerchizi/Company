@@ -150,26 +150,8 @@ public class InterviewTasks {
 	 */
 
 	public static void displayArrayShuffling(int[] array) {
-		Set<Integer> set = new HashSet<>();
-		int min = Integer.MAX_VALUE;
-		int max = Integer.MIN_VALUE;
-		for (int i = 0; i < array.length; i++){
-			if (array[i] > max) {
-				max = array[i];
-			}
-			if (array[i] < min){
-				min = array[i];
-			}
-		}
-		Random gen = new Random();
+		new Random().ints(0,array.length).distinct().limit(array.length).forEach(i -> System.out.print(array[i] + " "));
 
-		while (set.size() < array.length) {
-			int randomNum = gen.nextInt((max - min) + 1) + min;
-			if (set.add(randomNum)) {
-				System.out.print(randomNum + " ");
-			}
-		}
-		System.out.println();
 
 	}
 
