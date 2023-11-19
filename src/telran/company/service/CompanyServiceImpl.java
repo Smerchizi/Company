@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.io.*;
 
+import com.sun.source.tree.Tree;
 import telran.company.dto.DepartmentAvgSalary;
 import telran.company.dto.Employee;
 import telran.company.dto.SalaryIntervalDistribution;
@@ -76,33 +77,30 @@ public class CompanyServiceImpl implements CompanyService {
 		return empl;
 	}
 
-	private void removeEmployeesSalary(Employee empl) {
-		int salary = empl.salary();
-		Set<Employee> set = employeesSalary.get(salary);
+	private <T> void removeFromMap(Map<T, Set<Employee>> map, T key, Employee empl){
+		Set<Employee> set = map.get(key);
 		set.remove(empl);
 		if (set.isEmpty()){
-			employeesSalary.remove(salary);
+			map.remove(key);
 		}
+	}
+
+	private void removeEmployeesSalary(Employee empl) {
+		removeFromMap(employeesSalary, empl.salary(), empl);
+
 	}
 
 	private void removeEmployeesAge(Employee empl) {
-		LocalDate birthDate = empl.birthDate();
-		Set<Employee> set = employeesAge.get(birthDate);
-		set.remove(empl);
-
-		if (set.isEmpty()){
-			employeesAge.remove(birthDate);
-
-		}
+		removeFromMap(employeesAge, empl.birthDate(), empl);
 	}
 
 	private void removeEmployeesDepartmnet(Employee empl) {
-		String department = empl.department();
-		Set<Employee> set = employeesDepartment.get(department);
-		set.remove(empl);
-		if (set.isEmpty()){
-			employeesDepartment.remove(department);
-		}
+		removeFromMap(employeesDepartment, empl.department(), empl);
+	}
+
+	private <T> List<Employee> getEmployeeList(T from, T to, TreeMap<T, Set<Employee>> map){
+		Collection<Set<Employee>> col = map.subMap(from, to).values();
+		return col.stream().flatMap(Collection::stream).toList();
 	}
 
 	@Override
@@ -134,25 +132,14 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public List<Employee> getEmployeesBySalary(int salaryFrom, int salaryTo) {
-		Collection<Set<Employee>> col = employeesSalary.subMap(salaryFrom, salaryTo).values();
-		ArrayList<Employee> res = new ArrayList<>();
-		for (Set<Employee> set: col){
-			res.addAll(set);
-		}
-		return res;
+		return getEmployeeList(salaryFrom, salaryTo, employeesSalary);
 	}
 
 	@Override
 	public List<Employee> getEmployeeByAge(int ageFrom, int ageTo) {
 		LocalDate dateFrom = getBrithDate(ageTo);
 		LocalDate dateTo = getBrithDate(ageFrom);
-		Collection<Set<Employee>> col = employeesAge.subMap(dateFrom, dateTo).values();
-		ArrayList<Employee> res = new ArrayList<>();
-		for (Set<Employee> set: col){
-			res.addAll(set);
-		}
-
-		return res;
+		return getEmployeeList(dateFrom, dateTo, employeesAge);
 	}
 
 	private LocalDate getBrithDate(int age) {
