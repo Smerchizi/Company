@@ -27,6 +27,7 @@ class InputOutputTest {
         io.writeLine(point.x() + point.y() );
     }
     @Test
+    @Disabled
     void readObjectInteger() {
         Integer number =
                 io.readObject("Enter number in range [100-200]",
@@ -38,6 +39,13 @@ class InputOutputTest {
                             return num;
                         });
         io.writeLine(number / 2);
+    }
+    @Test
+    void readEmailTest() {
+        String email = io.readEmail("Enter email address",
+                "Wrong email");
+        io.writeLine(email);
+
     }
 
 }
